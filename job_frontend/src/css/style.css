@@ -1,0 +1,10 @@
+
+.theme__icon{
+    position: fixed;
+    bottom: 20px;
+    right:20px;
+    /* padding: 10px; */
+    border-radius: 50%;
+    background-color: rgb(92, 113, 122);
+
+}
