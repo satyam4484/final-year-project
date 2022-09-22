@@ -1,5 +1,5 @@
 import { useMemo } from "react";
-import { useGlobalContext } from "../context";
+import { useGlobalContext } from "../../context.js";
 import { ThemeProvider, createTheme } from "@mui/material/styles";
 
 const Theme = ({ children }) => {
