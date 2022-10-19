@@ -1,7 +1,14 @@
 from django.contrib import admin
 from .models import User
-# Register your models here.
+from apps.profiles.models import commonProfile
+
+
 @admin.register(User)
 class UserAdmin(admin.ModelAdmin):
-    list_display=['id','email','firstName','lastName','isAdmin','isActive',]
+    list_display=['id','email','usertype','isAdmin','isActive',]
+
+@admin.register(commonProfile)
+class commonProfileAdmin(admin.ModelAdmin):
+    list_display = ['id','user','headline','profilePic','coverImage']
+    
 

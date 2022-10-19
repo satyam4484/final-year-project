@@ -1,4 +1,5 @@
 import Mynavbar from "./Navbar";
+import Routing from "./Routing";
 import ThemeColor from "../Themes/ThemeColor";
 
 const Layout = ({ children }) => {
@@ -6,6 +7,7 @@ const Layout = ({ children }) => {
     <>
       <Mynavbar />
       {children}
+      <Routing/>
     </>
   );
 };

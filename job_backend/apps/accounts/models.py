@@ -1,3 +1,4 @@
+from email.policy import default
 from django.db import models
 from django.db.models.signals import post_save
 from django.dispatch import receiver
@@ -28,10 +29,9 @@ class UserManager(BaseUserManager):
 
 class User(AbstractBaseUser):
     email = models.EmailField(verbose_name='email',unique=True,max_length=255)
-    firstName = models.CharField(max_length=100)
-    lastName = models.CharField(max_length=100)
     isActive = models.BooleanField(default=True)
     isAdmin = models.BooleanField(default=False)
+    usertype = models.IntegerField(default = 1)
 
     objects =  UserManager()
     USERNAME_FIELD = 'email'

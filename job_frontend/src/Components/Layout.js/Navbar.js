@@ -1,22 +1,40 @@
-// import Button from 'react-bootstrap/Button';
-// import Container from 'react-bootstrap/Container';
-// import Form from 'react-bootstrap/Form';
-// import Nav from 'react-bootstrap/Nav';
-// import Navbar from 'react-bootstrap/Navbar';
-// import NavDropdown from 'react-bootstrap/NavDropdown';
-// import Offcanvas from 'react-bootstrap/Offcanvas';
-
-import {Button,Container,Form,Nav,Navbar,NavDropdown,Offcanvas} from 'react-bootstrap';
+import {
+  Button,
+  Container,
+  Form,
+  Nav,
+  Navbar,
+  NavDropdown,
+  Offcanvas,
+} from "react-bootstrap";
 
 const Mynavbar = () => {
+  return (
+    <Navbar collapseOnSelect bg="primary" variant="dark" sticky="top" expand="sm" className="">
+      <Container>
+        <Navbar.Brand href="#">Job Alert</Navbar.Brand>
+        <Navbar.Toggle aria-controls="offcanvasNavbar-expand-sm" />
+        <Navbar.Offcanvas
+              id="offcanvasNavbar-expand-sm"
+              aria-labelledby="offcanvasNavbar-expand-sm"
+              placement="end"
+            >
+              <Offcanvas.Header  closeButton>
+                <Offcanvas.Title id="offcanvasNavbarLabel-expand-sm">
+                  Offcanvas
+                </Offcanvas.Title>
+                <hr/>
+              </Offcanvas.Header>
 
-    return (
-      <Navbar bg='dark' expand='md' className=''>
-        <Container >
-          <Navbar.Brand href='#'>Job</Navbar.Brand>
-        </Container>
-      </Navbar>
-    ) 
-}
+              <Offcanvas.Body >
+              <Nav className="justify-content-center flex-grow-1 pe-3">
+                <Nav.Link className="hover">Home</Nav.Link>
+              </Nav>
+              </Offcanvas.Body>
+            </Navbar.Offcanvas>
+      </Container>
+    </Navbar>
+  );
+};
 
 export default Mynavbar;

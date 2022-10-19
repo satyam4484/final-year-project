@@ -35,7 +35,9 @@ INSTALLED_APPS = [
     'rest_framework_simplejwt',
 
     # apps
-    'apps.accounts'
+    'apps.accounts',
+    'apps.profiles',
+    'apps.organization'
 ]
 AUTH_USER_MODEL='accounts.User'
 

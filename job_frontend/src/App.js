@@ -1,15 +1,13 @@
 import { useGlobalContext } from "./context";
-import {getToken,getUser} from "./network/agent.js";
-
+import {updateUser} from "./network/agent.js";
 import Layout from "./Components/Layout.js/Layout";
 
 const App = () => {
-  return (
+  // updateUser({email:'aa@gmail.com',firstName:"ssjsns",lastName:"si"});
+  return (  
     <Layout>
-      <h1 className="text-danger">hello satyam</h1>
     </Layout>
   );
 };
 
 export default App;
-
