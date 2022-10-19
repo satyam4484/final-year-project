@@ -1,5 +1,7 @@
 from django.db import models
 from django.contrib.auth import get_user_model
+from django.db.models.signals import post_save
+from django.dispatch import receiver
 User = get_user_model()
 
 class contact(models.Model):
@@ -23,22 +25,24 @@ class website(models.Model):
 
 class skill(models.Model):
     name = models.CharField(max_length=30)
-
+    
     def __str__(self):
         return self.name
 
 class commonProfile(models.Model):
     user = models.OneToOneField(User,on_delete=models.CASCADE)
-    headline = models.CharField(max_length=500)
+    headline = models.CharField(max_length=500,blank=True,null=True)
     profilePic=models.ImageField(upload_to='profileimage/',default='defaultProfile.jpg')
     coverImage = models.ImageField(upload_to='coverImage/',default='cover.png')
-    websites = models.ManyToManyField(website,related_name='websites',blank=True)
+    websites = models.ManyToManyField(website,related_name='websites',blank=True,null=True)
 
+    def __str__(self):
+        return self.user.email
 
 
 class userProfile(models.Model):
-    firstName = models.CharField(max_length=100)
-    lastName = models.CharField(max_length=100)
+    firstName = models.CharField(max_length=100,blank=True,null=True)
+    lastName = models.CharField(max_length=100,blank=True,null=True)
     profile = models.OneToOneField(commonProfile,on_delete = models.CASCADE)
     contactDetails = models.OneToOneField(contact,on_delete=models.CASCADE,blank=True,null=True)
     skill = models.ManyToManyField(skill,related_name='userskills',blank=True)
@@ -80,3 +84,4 @@ class project(models.Model):
     enddate = models.DateField()
     projectUrl = models.URLField()
     description = models.CharField(max_length=1000,blank=True,null=True)
+

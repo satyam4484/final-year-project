@@ -1,9 +1,12 @@
 from rest_framework.decorators import api_view,permission_classes
 from rest_framework.response import Response
 from rest_framework.permissions import AllowAny
+
+from apps.organization.models import organization
 from .serializers import UserSerializer
 from django.contrib.auth import get_user_model
 User = get_user_model()
+from apps.profiles.models import *
 
 def content(error,message,extraMessage,data=[]):
     return Response({"error":error,"message":message,"additionalMessage":extraMessage,"data":data})
@@ -16,10 +19,15 @@ def createUser(request):
         data = request.data
         password = data['password']
         user = User.objects.create(email =data['email'],usertype=data['usertype'])
-        user.set_password(password);
+        user.set_password(password)
         user.save()
         if User.objects.filter(email = data['email']):
             user = User.objects.get(email = data['email'])
+            profile = commonProfile.objects.get_or_create(user=user)[0]
+            if user.usertype == 1:
+                organization.objects.create(profile = profile)
+            elif user.usertype == 2:
+                userProfile.objects.create(profile=profile)
             serializer = UserSerializer(user,context={"request": request})
             return content(False,'Account Created Successfully','',serializer.data)
         return content(True,'Something went wrong try again','Error occurred in getting creating user') 

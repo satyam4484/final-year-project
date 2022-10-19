@@ -1,5 +1,9 @@
 from django.db import models
-from apps.profiles.models import commonProfile
+from django.contrib.auth import get_user_model
+User = get_user_model()
+from django.db.models.signals import post_save
+from django.dispatch import receiver
+from apps.profiles.models import *
 
 # Create your models here.
 class organization(models.Model):
@@ -11,3 +15,6 @@ class organization(models.Model):
 
     def __str__(self):
         return self.companyName
+
+
+
