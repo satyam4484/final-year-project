@@ -1,5 +1,3 @@
-from functools import partial
-import re
 from rest_framework.decorators import api_view
 from rest_framework.permissions import *
 from .serializers import *
