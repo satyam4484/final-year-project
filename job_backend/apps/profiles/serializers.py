@@ -57,7 +57,7 @@ class educationSerializer(ModelSerializer):
 class experienceSerializer(ModelSerializer):
     class Meta:
         model = experience
-        fields = "__all__"
+        fields = ['id','role','employementType','companyName','location','startdate','enddate','description']
 
 
 class projectSerializer(ModelSerializer):

@@ -9,7 +9,11 @@ User = get_user_model()
 from apps.profiles.models import *
 
 def content(error,message,extraMessage="",data=[]):
-    return Response({"error":error,"message":message,"additionalMessage":f'Error Occured in {extraMessage} !!!',"data":data})
+    newmsg =''
+    if(extraMessage) :
+        newmsg = f'Error Occured in {extraMessage} !!!'
+
+    return Response({"error":error,"message":message,"additionalMessage":newmsg,"data":data})
     
 
 @api_view(['POST'])

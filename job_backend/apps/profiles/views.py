@@ -7,6 +7,50 @@ from .models import *
 from apps.accounts.views import content
 
 
+# experience details 
+@api_view(['GET','POST','PATCH','DELETE'])
+def experienceView(request,id=None):
+    if request.method == 'GET':
+        try:
+            edu = experience.objects.filter(user = request.user)
+            serializer = experienceSerializer(edu,many=True)
+            return content(False,"","",serializer.data)
+        except Exception as e:
+            return content(True,str(e),"getting experience")
+    elif request.method == "POST":
+        try:
+            serializer =experienceSerializer(data = request.data)
+            if serializer.is_valid():
+                serializer.save(user = request.user)
+                return content(False,"","",serializer.data)
+            raise Exception(serializer.errors)
+        except Exception as e:
+            return content(True,str(e),"adding experience")
+    elif request.method == "PATCH":
+        try:
+            if id:
+                edu = experience.objects.get(id = id)
+                serializer = experienceSerializer(instance=edu,data=request.data,partial=True)
+                if serializer.is_valid(raise_exception=True):
+                    serializer.save(user=request.user)
+                    return content(False,"","",serializer.data)
+                raise Exception(serializer.errors)
+            raise Exception("Select a valid experience to update")
+        except Exception as e:
+            return content(True,str(e),"updating experience")
+    else:
+        try:
+            if not id or not experience.objects.filter(id=id):
+                raise Exception("experience details not found")
+            
+            edu = experience.objects.get(id = id)
+            edu.delete()
+            return content(False,"experience deleted")
+        except Exception as e:
+            return content(True,str(e),"deleting experience")
+
+
+
 # education details
 @api_view(['GET','POST','PATCH','DELETE'])
 def educationView(request,id=None):

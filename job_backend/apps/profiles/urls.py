@@ -8,5 +8,7 @@ urlpatterns = [
     path('skill',setSkill),
     path('skill/<int:id>',setSkill),
     path('education',educationView),
-    path('education/<int:id>',educationView)
+    path('education/<int:id>',educationView),
+    path('experience',experienceView),
+    path('experience/<int:id>',experienceView)
 ]
