@@ -8,8 +8,8 @@ from django.contrib.auth import get_user_model
 User = get_user_model()
 from apps.profiles.models import *
 
-def content(error,message,extraMessage,data=[]):
-    return Response({"error":error,"message":message,"additionalMessage":extraMessage,"data":data})
+def content(error,message,extraMessage="",data=[]):
+    return Response({"error":error,"message":message,"additionalMessage":f'Error Occured in {extraMessage} !!!',"data":data})
     
 
 @api_view(['POST'])

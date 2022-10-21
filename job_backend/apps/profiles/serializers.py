@@ -51,7 +51,7 @@ class userProfileSerializer(ModelSerializer):
 class educationSerializer(ModelSerializer):
     class Meta:
         model = education
-        fields = "__all__"
+        fields = ['id','school','degree','fieldOfStudy','startdate','enddate','grade','description']
 
 
 class experienceSerializer(ModelSerializer):

@@ -7,4 +7,6 @@ urlpatterns = [
     path('website',websiteView),
     path('skill',setSkill),
     path('skill/<int:id>',setSkill),
+    path('education',educationView),
+    path('education/<int:id>',educationView)
 ]

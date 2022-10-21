@@ -1,12 +1,56 @@
-
+from functools import partial
+import re
 from rest_framework.decorators import api_view
 from rest_framework.permissions import *
-from rest_framework.response import Response
 from .serializers import *
 from .models import *
 from apps.accounts.views import content
 
 
+# education details
+@api_view(['GET','POST','PATCH','DELETE'])
+def educationView(request,id=None):
+    if request.method == 'GET':
+        try:
+            edu = education.objects.filter(user = request.user)
+            serializer = educationSerializer(edu,many=True)
+            return content(False,"","",serializer.data)
+        except Exception as e:
+            return content(True,str(e),"getting education")
+    elif request.method == "POST":
+        try:
+            serializer =educationSerializer(data = request.data)
+            if serializer.is_valid():
+                serializer.save(user = request.user)
+                return content(False,"","",serializer.data)
+            raise Exception(serializer.errors)
+        except Exception as e:
+            return content(True,str(e),"getting education")
+    elif request.method == "PATCH":
+        try:
+            if id:
+                edu = education.objects.get(id = id)
+                serializer = educationSerializer(instance=edu,data=request.data,partial=True)
+                if serializer.is_valid(raise_exception=True):
+                    serializer.save(user=request.user)
+                    return content(False,"","",serializer.data)
+                raise Exception(serializer.errors)
+            raise Exception("Select a valid Education to update")
+        except Exception as e:
+            return content(True,str(e),"getting education")
+    else:
+        try:
+            if not id or not education.objects.filter(id=id):
+                raise Exception("Education details not found")
+            
+            edu = education.objects.get(id = id)
+            edu.delete()
+            return content(False,"Education deleted")
+
+        except Exception as e:
+            return content(True,str(e),"getting education")
+
+# user profile data 
 @api_view(['GET','PATCH'])
 def userProfileView(request):
     if request.method == "GET":
@@ -33,6 +77,8 @@ def userProfileView(request):
         except Exception as e:
             return content(True,str(e),"Error Occured in updating user profile")
 
+
+# contact functions
 @api_view(['POST','PATCH'])
 def contactView(request):
     if request.method == "POST":
@@ -63,6 +109,8 @@ def contactView(request):
         except Exception as e:
             return content(True,str(e),"Error Occured in creating contact")
 
+
+# websites
 @api_view(['POST','PATCH','DELETE'])
 def websiteView(request):
     if request.method == "POST":
@@ -99,10 +147,8 @@ def websiteView(request):
             return content(True,str(e),"Error Occured in deleting websites ")
         
 
-
-
+# skills
 @api_view(['GET','POST','DELETE'])
-# @permission_classes([AllowAny])
 def setSkill(request,id=None):
     if request.method == "GET":
         try:
@@ -140,7 +186,7 @@ def setSkill(request,id=None):
                     return content(False,"skill removed","")
                 else:
                     return content(True,"Skill doest not exist","")
-            return content(True,"Please Call a valid Api","Error Occured in deleting skills")
+            raise Exception("Enter a valid data")
         except Exception as e:
             return content(True,str(e),"Error Occured in deleting skills")
     
