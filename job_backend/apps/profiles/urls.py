@@ -10,5 +10,7 @@ urlpatterns = [
     path('education',educationView),
     path('education/<int:id>',educationView),
     path('experience',experienceView),
-    path('experience/<int:id>',experienceView)
+    path('experience/<int:id>',experienceView),
+    path('project',projectView),
+    path('project/<int:id>',projectView),
 ]

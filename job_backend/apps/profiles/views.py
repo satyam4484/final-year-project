@@ -7,6 +7,50 @@ from .models import *
 from apps.accounts.views import content
 
 
+@api_view(['GET','POST','PATCH','DELETE'])
+def projectView(request,id=None):
+    if request.method == 'GET':
+        try:
+            edu = project.objects.filter(user = request.user)
+            serializer = projectSerializer(edu,many=True)
+            return content(False,"","",serializer.data)
+        except Exception as e:
+            return content(True,str(e),"getting project")
+    elif request.method == "POST":
+        try:
+            serializer =projectSerializer(data = request.data)
+            if serializer.is_valid():
+                serializer.save(user = request.user)
+                return content(False,"","",serializer.data)
+            raise Exception(serializer.errors)
+        except Exception as e:
+            return content(True,str(e),"adding project")
+    elif request.method == "PATCH":
+        try:
+            if id:
+                edu = project.objects.get(id = id)
+                serializer = projectSerializer(instance=edu,data=request.data,partial=True)
+                if serializer.is_valid(raise_exception=True):
+                    serializer.save(user=request.user)
+                    return content(False,"","",serializer.data)
+                raise Exception(serializer.errors)
+            raise Exception("Select a valid project to update")
+        except Exception as e:
+            return content(True,str(e),"updating project")
+    else:
+        try:
+            if not id or not project.objects.filter(id=id):
+                raise Exception("experience details not found")
+            
+            edu = project.objects.get(id = id)
+            edu.delete()
+            return content(False,"project deleted")
+        except Exception as e:
+            return content(True,str(e),"deleting project")
+
+
+
+
 # experience details 
 @api_view(['GET','POST','PATCH','DELETE'])
 def experienceView(request,id=None):
