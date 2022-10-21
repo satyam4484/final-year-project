@@ -1,3 +1,4 @@
+from email.policy import default
 from django.db import models
 from django.contrib.auth import get_user_model
 from django.db.models.signals import post_save
@@ -24,7 +25,7 @@ class website(models.Model):
         return self.name
 
 class skill(models.Model):
-    name = models.CharField(max_length=30)
+    name = models.CharField(max_length=30,default='Cpp')
     
     def __str__(self):
         return self.name
@@ -34,7 +35,7 @@ class commonProfile(models.Model):
     headline = models.CharField(max_length=500,blank=True,null=True)
     profilePic=models.ImageField(upload_to='profileimage/',default='defaultProfile.jpg')
     coverImage = models.ImageField(upload_to='coverImage/',default='cover.png')
-    websites = models.ManyToManyField(website,related_name='websites',blank=True,null=True)
+    websites = models.ManyToManyField(website,related_name='websites',blank=True)
 
     def __str__(self):
         return self.user.email

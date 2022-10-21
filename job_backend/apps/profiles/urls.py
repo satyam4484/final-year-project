@@ -6,4 +6,5 @@ urlpatterns = [
     path('contact',contactView),
     path('website',websiteView),
     path('skill',setSkill),
+    path('skill/<int:id>',setSkill),
 ]

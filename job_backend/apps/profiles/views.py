@@ -1,4 +1,4 @@
-from functools import partial
+
 from rest_framework.decorators import api_view
 from rest_framework.permissions import *
 from rest_framework.response import Response
@@ -97,16 +97,50 @@ def websiteView(request):
             return content(False,"","website deleted successfully")
         except Exception as e:
             return content(True,str(e),"Error Occured in deleting websites ")
+        
 
 
-@api_view(['POST'])
+
+@api_view(['GET','POST','DELETE'])
 # @permission_classes([AllowAny])
-def setSkill(request):
-    try:
-        data = request.data['data']
-        serializer = skillSerializer(data=data,many=True,context={"request": request})
-        if serializer.is_valid():
-            serializer.save()
+def setSkill(request,id=None):
+    if request.method == "GET":
+        try:
+            user = userProfile.objects.get(profile__user = request.user)
+            serializer = skillSerializer(user.skill,many=True)
             return content(False,"","",serializer.data)
-    except Exception as e:
-        return content(True,str(e),"Error occured in creating skill")
+        except Exception as e:
+            return content(True,str(e),"Error Occured in getting skills")
+    elif request.method == "POST":
+        try:
+            skills = request.data['skills']
+            for val in skills:
+                serializer = skillSerializer(data=val,context={"request": request})
+                if serializer.is_valid():
+                    serializer.save()
+                    sk = skill.objects.get(pk = serializer.data['id'])
+                    user = userProfile.objects.get(profile__user = request.user)
+                    if(not user.skill.filter(name = serializer.data['name'])) :
+                        user.skill.add(sk)
+                        user.save()
+
+            user = userProfile.objects.get(profile__user = request.user)     
+            serializer = skillSerializer(user.skill,many=True)
+            return content(False,"","",serializer.data)
+        except Exception as e:
+            return content(True,str(e),"Error occured in creating skill")
+    elif request.method == "DELETE":
+        
+        try:
+            if id:
+                user = userProfile.objects.get(profile__user = request.user)
+                if(user.skill.filter(id = id)) :
+                    sk = skill.objects.get(id = id)
+                    user.skill.remove(sk)
+                    return content(False,"skill removed","")
+                else:
+                    return content(True,"Skill doest not exist","")
+            return content(True,"Please Call a valid Api","Error Occured in deleting skills")
+        except Exception as e:
+            return content(True,str(e),"Error Occured in deleting skills")
+    

@@ -30,21 +30,22 @@ class skillSerializer(ModelSerializer):
         model = skill
         fields = ['id','name']
 
-    def create(self, validated_data):        
-        data = skill.objects.get_or_create(**validated_data)
-        if(not data[1]):
-            return data[0]
-        return skill.objects.create(**validated_data)
+    def create(self, validated_data):  
+        print(validated_data)  
+        if(skill.objects.filter(name = validated_data['name'])) :
+            return skill.objects.get(name = validated_data['name'])
+
+        return skill.objects.create(name = validated_data['name'])
 
 
 
 class userProfileSerializer(ModelSerializer):
     profile = commonProfileSerializer()
     contactDetails = contactSerializer()
-    skill = skillSerializer(many=True)
+    # skill = skillSerializer(many=True)
     class Meta:
         model = userProfile
-        fields = ['id','firstName','lastName','profile','contactDetails','skill']
+        fields = ['id','firstName','lastName','profile','contactDetails']
 
 
 class educationSerializer(ModelSerializer):
