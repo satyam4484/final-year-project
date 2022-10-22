@@ -1,3 +1,7 @@
+*{
+    box-sizing: border-box;
+}
+
 .theme__icon{
     position: fixed;
     bottom: 20px;
@@ -5,5 +9,8 @@
     /* padding: 10px; */
     border-radius: 50%;
     background-color: rgb(92, 113, 122);
-
 }
+
+/* .active{
+    border-bottom: 2px solid red;
+} */
