@@ -1,10 +1,13 @@
 import axiosClient from "./apiClient.js";
 
-
 // accounts urls
-export const getToken =(data) => {
+export const getToken =  (data) => {
     return axiosClient().post('token/',JSON.stringify(data)).then(response => console.log(response));
     // getToken({"email":"aa@gmail.com","password":"aa"});
+}
+
+export const validateEmail = (data) => {
+    return axiosClient().post('user/validate',data).then(response => response.data)
 }
 
 export const getUser =(data) => {
@@ -17,7 +20,7 @@ export const updateUser = (data) => {
 }
 
 export const createUser = (data) => {
-    return axiosClient().post('user/create/',JSON.stringify(data)).then(response => console.log(response))
+    return axiosClient().post('user/create/',JSON.stringify(data)).then(response => response.data);
 //   createUser({email:"sa@gmail.com",password:"pass",firstName:"sa",lastName:"si"});
 
 }

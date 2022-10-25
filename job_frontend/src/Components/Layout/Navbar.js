@@ -6,27 +6,34 @@ import {
   Form,
   Button,
   CloseButton,
+  NavDropdown,
 } from "react-bootstrap";
 import { useState } from "react";
 import { NavLink } from "react-router-dom";
 import { navitems } from "../../data";
-
-const CustomBtn = ({ toggle }) => {
-  return <CloseButton onClick={toggle} />;
-};
+import { colors } from "../../data";
+import { Check, Circle } from "react-bootstrap-icons";
+import { useGlobalContext } from "../../context";
 
 const Mynavbar = () => {
+  const { themeColor, dispatch } = useGlobalContext();
   const [toggleNavbar, setToggleNavbar] = useState(false);
+  const [toggleDropDown, setToggleDropDown] = useState(false);
+
+  const colorChangeHandler = (e) => {
+    dispatch({ type: "THEME_COLOR", color: e.target.name });
+    setToggleDropDown(false);
+  };
 
   return (
     <Navbar
       className="mb-3"
       expand="sm"
-      bg="info"
+      bg={themeColor}
       variant="dark"
       expanded={toggleNavbar}
     >
-      <Container >
+      <Container>
         <NavLink to="/" className="navbar-brand sm-auto">
           Job Alert
         </NavLink>
@@ -50,21 +57,18 @@ const Mynavbar = () => {
           </Offcanvas.Header>
           <Offcanvas.Body>
             <Nav className="justify-content-center flex-grow-1 pe-3">
-
-
               {/* looping all navitem to be added  */}
               {navitems.map((item, index) => (
-                <NavLink key={index}
-                  
+                <NavLink
+                  key={index}
                   to={item.url}
-                  className={`nav-link my-1 my-sm-0 ${isActive => (isActive?"active":"")}`}
+                  className={`nav-link my-1 my-sm-0 ${(isActive) =>
+                    isActive ? "active" : ""}`}
                   onClick={() => setToggleNavbar(false)}
                 >
                   {item.title}
-                  
                 </NavLink>
               ))}
-
             </Nav>
             {/* <Form className="d-flex">
               <Form.Control
@@ -75,8 +79,25 @@ const Mynavbar = () => {
               />
               <Button variant="danger">Search</Button>
             </Form> */}
-            <Nav className="justify-content-end d-sm-none ">
-              <h5>hello</h5>
+            <Nav className="justify-content-end">
+              <NavDropdown
+                title="Color theme"
+                id="basic-nav-dropdown"
+                show={toggleDropDown}
+                onClick={() => setToggleDropDown(!toggleDropDown)}
+              >
+                {colors.map((color) => (
+                  <div key={color} className="d-flex hover">
+                    <Button
+                      name={color}
+                      className={`round  mx-2 my-2 d-inline`}
+                      variant={color}
+                      onClick={colorChangeHandler}
+                    ></Button>
+                    <p>{color}</p>
+                  </div>
+                ))}
+              </NavDropdown>
             </Nav>
           </Offcanvas.Body>
         </Navbar.Offcanvas>

@@ -9,7 +9,7 @@ const axiosClient = (options = {}) => {
       "Accept": "application/json",
       "Content-Type": "application/json",
       // ...headers,
-      "Authorization":"Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNjY2NDE5MDY4LCJpYXQiOjE2NjM4MjcwNjgsImp0aSI6ImNlZjhkNmU4OTU2YTRhMGY4NzBiMjk0MDc1Y2ViMTBhIiwidXNlcl9pZCI6M30.j82kYIk4xXmnz1tmYwzK71cpFkh5x_2aewQacW3kMQE"
+      // "Authorization":"Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNjY2NDE5MDY4LCJpYXQiOjE2NjM4MjcwNjgsImp0aSI6ImNlZjhkNmU4OTU2YTRhMGY4NzBiMjk0MDc1Y2ViMTBhIiwidXNlcl9pZCI6M30.j82kYIk4xXmnz1tmYwzK71cpFkh5x_2aewQacW3kMQE"
     },
   });
 };

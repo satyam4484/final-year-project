@@ -12,4 +12,7 @@ export const navitems = [
     {title:"Companies",url:"/companies"}
 ]
 
+export const colors = ["info","primary","danger","warning","success"]
+
+// exporting images
 export {default as signupimage} from "./assests/images/signup.svg";

@@ -15,6 +15,16 @@ def content(error,message,extraMessage="",data=[]):
 
     return Response({"error":error,"message":message,"additionalMessage":newmsg,"data":data})
     
+@api_view(['POST'])
+@permission_classes([AllowAny])
+def  validateEmail(request):
+    try:
+        email = request.data['email']
+        if(User.objects.filter(email = email)):
+            return content(True,"Email has been Already Taken")
+        return content(False,"")
+    except Exception as e:
+        return content(True,str(e),"Error Occured in validating email")
 
 @api_view(['POST'])
 @permission_classes([AllowAny])

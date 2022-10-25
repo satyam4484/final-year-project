@@ -4,8 +4,10 @@ const AppContext = React.createContext();
 
 const initialState = {
     theme:'light',
-    isloading:false,
+    themeColor:'info',
+    isLoading:false,
     isloggedin:false,
+    error:{isError:false,variant:'danger',title:'',message:''},
     user:{}
 };
 
@@ -16,8 +18,15 @@ const AppProvider = ({children}) => {
         dispatch({type:'TOGGLE_THEME'});
     }
 
+    const toggleSpin = () => {
+        dispatch({type:'TOGGLE_SPIN'});
+    }
+
+    const setMessage=(isError,variant,title,message)=> {
+        dispatch({type:'SET_MESSAGE',data:{isError,variant,title,message}});
+    }
     return (
-        <AppContext.Provider value={{...state,toggleTheme}}>
+        <AppContext.Provider value={{...state,toggleSpin,setMessage}}>
             {children}
         </AppContext.Provider>
     )
