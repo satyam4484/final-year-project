@@ -14,6 +14,15 @@ def content(error,message,extraMessage="",data=[]):
         newmsg = f'Error Occured in {extraMessage} !!!'
 
     return Response({"error":error,"message":message,"additionalMessage":newmsg,"data":data})
+
+@api_view(['GET'])
+def getUser(request):
+    try:
+        user = User.objects.get(email = request.user)
+        serializer = UserSerializer(user)
+        return content(False,'','',serializer.data)
+    except Exception as e:
+        return content(True,str(e),'getting user')
     
 @api_view(['POST'])
 @permission_classes([AllowAny])

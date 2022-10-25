@@ -1,3 +1,4 @@
+import { useEffect } from "react";
 import Mynavbar from "./Components/Layout/Navbar";
 import Routing from "./Components/Layout/Routing";
 import { Container,Row } from "react-bootstrap";
@@ -6,8 +7,14 @@ import Spinner from "./Components/UI/Spinner";
 import { useGlobalContext } from "./context";
 
 const App = () => {
-  // updateUser({email:'aa@gmail.com',firstName:"ssjsns",lastName:"si"});
-  const {isLoading,error} = useGlobalContext();
+  const {isLoading,error,userLogin} = useGlobalContext();
+
+  useEffect(() => {
+    if(localStorage.getItem("user")) {
+      console.log("user logined")
+      userLogin();
+    }
+  },[])
   return (
     <>
       <Mynavbar />

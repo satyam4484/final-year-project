@@ -5,6 +5,8 @@ from .models import *
 from apps.accounts.views import content
 
 
+
+
 @api_view(['GET','POST','PATCH','DELETE'])
 def projectView(request,id=None):
     if request.method == 'GET':

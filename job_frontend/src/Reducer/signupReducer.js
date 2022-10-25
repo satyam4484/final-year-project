@@ -1,6 +1,7 @@
 export const initialFormState = {
     email: { value: "", touched: false, hasError: false, error: "" },
     password: { value: "", touched: false, hasError: false, error: "" },
+    formValid:false,
     usertype:1,
   };
 export const signupReducer = (state,action) => {
@@ -16,7 +17,6 @@ export const signupReducer = (state,action) => {
             return {...state,[action.data.key]:{...state[action.data.key],hasError:action.data.error,error:action.data.value}}
         case "ON_CHANGE":
             return {...state,[action.data.key]:{...state[action.data.key],value:action.data.value,hasError:false}}
-
 
         case "INPUT_TOUCHED":
             return {...state,[action.data]:{...state[action.data],touched:true}}
@@ -34,6 +34,12 @@ export const signupReducer = (state,action) => {
             if(action.data.key === "password" && action.data.value.trim().length < 8) {
                 return {...state,[action.data.key]:{...state[action.data.key],hasError:true,error:`${action.data.key} must be of 8 digits or characters !!!`}}
             }
+        case "FORM_VALID":
+            if(state.email.value.length > 0 && state.password.value.length > 0) {
+                return {...state,formValid:true}
+            }
+            
+            return state;
         default :
             return state;
     }

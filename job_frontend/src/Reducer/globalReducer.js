@@ -1,5 +1,11 @@
 export const globalReducer = (state,action) => {
     switch(action.type){
+        case 'USER_LOGOUT':
+            localStorage.removeItem("token");
+            localStorage.removeItem("user");
+            return {...state,isloggedin:false,user:{}}
+        case 'LOGIN_USER':
+            return {...state,isloggedin:true,user:action.data}
         case 'TOGGLE_SPIN':
             return {...state,isLoading:!state.isLoading}
         case 'TOGGLE_THEME':

@@ -9,21 +9,25 @@ import {
   NavDropdown,
 } from "react-bootstrap";
 import { useState } from "react";
-import { NavLink } from "react-router-dom";
+import { NavLink,useNavigate} from "react-router-dom";
 import { navitems } from "../../data";
 import { colors } from "../../data";
-import { Check, Circle } from "react-bootstrap-icons";
 import { useGlobalContext } from "../../context";
 
 const Mynavbar = () => {
-  const { themeColor, dispatch } = useGlobalContext();
+  const { themeColor, setThemeColor, isloggedin,userLogout } = useGlobalContext();
   const [toggleNavbar, setToggleNavbar] = useState(false);
   const [toggleDropDown, setToggleDropDown] = useState(false);
+  const navigate = useNavigate();
 
   const colorChangeHandler = (e) => {
-    dispatch({ type: "THEME_COLOR", color: e.target.name });
+    setThemeColor(e.target.name);
     setToggleDropDown(false);
   };
+
+  const useLogoutHandler = ()=>{
+    userLogout();
+  }
 
   return (
     <Navbar
@@ -33,8 +37,8 @@ const Mynavbar = () => {
       variant="dark"
       expanded={toggleNavbar}
     >
-      <Container>
-        <NavLink to="/" className="navbar-brand sm-auto">
+      <Container fluid>
+        <NavLink to="/" className="navbar-brand sm-auto mx-auto">
           Job Alert
         </NavLink>
         <Navbar.Toggle
@@ -57,8 +61,29 @@ const Mynavbar = () => {
           </Offcanvas.Header>
           <Offcanvas.Body>
             <Nav className="justify-content-center flex-grow-1 pe-3">
+              
+              <NavLink to="/" className={`nav-link my-1 my-sm-0 ${(isActive) =>isActive ? "active" : ""}`} onClick={() => setToggleNavbar(false)} >
+                Home
+              </NavLink>
+              <NavLink to="/jobs" className={`nav-link my-1 my-sm-0 ${(isActive) =>isActive ? "active" : ""}`} onClick={() => setToggleNavbar(false)} >
+                Jobs
+              </NavLink>
+              {!isloggedin && <NavLink to="/login" className={`nav-link my-1 my-sm-0 ${(isActive) =>isActive ? "active" : ""}`} onClick={() => setToggleNavbar(false)} >
+                Login
+              </NavLink>}
+              {!isloggedin && <NavLink to="/signup" className={`nav-link my-1 my-sm-0 ${(isActive) =>isActive ? "active" : ""}`} onClick={() => setToggleNavbar(false)} >
+                Signup
+              </NavLink>}
+              {isloggedin && <a className='nav-link my-1 my-sm-0' style={{cursor: 'pointer'}} onClick={useLogoutHandler} >
+                Logout
+              </a>}
+              {isloggedin && <NavLink to="/profile" className={`nav-link my-1 my-sm-0 ${(isActive) =>isActive ? "active" : ""}`} onClick={() => setToggleNavbar(false)} >
+                Profile
+              </NavLink>}
+
+
               {/* looping all navitem to be added  */}
-              {navitems.map((item, index) => (
+              {/* {/* {navitems.map((item, index) => (
                 <NavLink
                   key={index}
                   to={item.url}
@@ -68,7 +93,7 @@ const Mynavbar = () => {
                 >
                   {item.title}
                 </NavLink>
-              ))}
+              ))} */}
             </Nav>
             {/* <Form className="d-flex">
               <Form.Control
@@ -85,6 +110,7 @@ const Mynavbar = () => {
                 id="basic-nav-dropdown"
                 show={toggleDropDown}
                 onClick={() => setToggleDropDown(!toggleDropDown)}
+                drop="start"
               >
                 {colors.map((color) => (
                   <div key={color} className="d-flex hover">

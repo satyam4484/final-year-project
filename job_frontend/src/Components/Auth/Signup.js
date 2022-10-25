@@ -43,7 +43,7 @@ const Signup = () => {
 
   const createAccountHandler = (e) => {
     e.preventDefault();
-    if (state.email.hasError || state.password.hasError) {
+    if (state.email.hasError || state.password.hasError || state.formValid === false) {
       return;
     }
     toggleSpin();
@@ -118,7 +118,7 @@ const Signup = () => {
                 checked={state.usertype === 1}
                 onChange={userTypeHandler}
               />
-              <label className="form-check-label" for="flexRadioDefault1">
+              <label className="form-check-label" >
                 User
               </label>
             </div>
@@ -132,7 +132,7 @@ const Signup = () => {
                 checked={state.usertype === 2}
                 onChange={userTypeHandler}
               />
-              <label className="form-check-label" for="flexRadioDefault1">
+              <label className="form-check-label" >
                 Organization
               </label>
             </div>
