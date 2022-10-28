@@ -68,7 +68,7 @@ class experience(models.Model):
     companyName = models.CharField(max_length=100)
     location = models.CharField(max_length=200)
     startdate = models.DateField()
-    enddate = models.DateField()
+    enddate = models.DateField(null=True,blank=True)
     description = models.CharField(max_length=1000)
 
     def __str__(self):

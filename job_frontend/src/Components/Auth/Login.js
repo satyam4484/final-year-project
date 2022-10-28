@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { NavLink,useNavigate } from "react-router-dom";
 import { Form, Button } from "react-bootstrap";
-import { getToken,getUser } from "../../network/agent";
+import { getToken,getUser ,getUserProfile} from "../../network/agent";
 import { useGlobalContext } from "../../context";
 
 const intialState = {
@@ -11,7 +11,7 @@ const intialState = {
 
 const Login = () => {
   const [data, setData] = useState(intialState);
-  const { setMessage, toggleSpin ,userLogin} = useGlobalContext();
+  const { setMessage, toggleSpin ,userLogin,setUserProfile} = useGlobalContext();
   const navigate = useNavigate();
 
   const onChangeHandler = (e) => {
@@ -47,8 +47,8 @@ const Login = () => {
             if(response.error === false) {
               localStorage.setItem("user",JSON.stringify(response.data));
               userLogin(response.data);
-              
-              navigate('/profile');
+              getUserProfile().then(response => setUserProfile(response.data));
+              navigate('/');
             }else{
 
             }

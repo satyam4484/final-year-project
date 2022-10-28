@@ -1,5 +1,7 @@
 export const globalReducer = (state,action) => {
     switch(action.type){
+        case 'USER_PROFILE':
+            return {...state,profile:action.data}
         case 'USER_LOGOUT':
             localStorage.removeItem("token");
             localStorage.removeItem("user");

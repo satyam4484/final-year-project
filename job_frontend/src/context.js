@@ -9,6 +9,7 @@ const initialState = {
   isloggedin: false,
   error: { isError: false, variant: "danger", title: "", message: "" },
   user: {},
+  profile: {},
 };
 
 const AppProvider = ({ children }) => {
@@ -25,9 +26,13 @@ const AppProvider = ({ children }) => {
     dispatch({ type: "TOGGLE_SPIN" });
   };
 
-  const userLogout = ()=>{
-    dispatch({type:'USER_LOGOUT'});
-  }
+  const setUserProfile = (profile) => {
+    
+    dispatch({ type: "USER_PROFILE", data:profile });
+  };
+  const userLogout = () => {
+    dispatch({ type: "USER_LOGOUT" });
+  };
 
   const userLogin = (data) => {
     dispatch({ type: "LOGIN_USER", data });
@@ -40,7 +45,15 @@ const AppProvider = ({ children }) => {
   };
   return (
     <AppContext.Provider
-      value={{ ...state, toggleSpin, setMessage, setThemeColor,userLogin,userLogout}}
+      value={{
+        ...state,
+        toggleSpin,
+        setMessage,
+        setThemeColor,
+        userLogin,
+        userLogout,
+        setUserProfile,
+      }}
     >
       {children}
     </AppContext.Provider>

@@ -9,13 +9,13 @@ import {
   NavDropdown,
 } from "react-bootstrap";
 import { useState } from "react";
-import { NavLink,useNavigate} from "react-router-dom";
+import { NavLink, useNavigate } from "react-router-dom";
 import { navitems } from "../../data";
 import { colors } from "../../data";
 import { useGlobalContext } from "../../context";
 
 const Mynavbar = () => {
-  const { themeColor, setThemeColor, isloggedin,userLogout } = useGlobalContext();
+  const { themeColor, setThemeColor, isloggedin, userLogout, profile, user } = useGlobalContext();
   const [toggleNavbar, setToggleNavbar] = useState(false);
   const [toggleDropDown, setToggleDropDown] = useState(false);
   const navigate = useNavigate();
@@ -25,21 +25,24 @@ const Mynavbar = () => {
     setToggleDropDown(false);
   };
 
-  const useLogoutHandler = ()=>{
+  const useLogoutHandler = () => {
     userLogout();
+    navigate('/login');
   }
 
   return (
     <Navbar
+    sticky="top"
       className="mb-3"
       expand="sm"
       bg={themeColor}
       variant="dark"
       expanded={toggleNavbar}
+      
     >
       <Container fluid>
         <NavLink to="/" className="navbar-brand sm-auto mx-auto">
-          Job Alert
+          Rev Up
         </NavLink>
         <Navbar.Toggle
           aria-controls="offcanvasNavbar-expand-sm"
@@ -59,26 +62,30 @@ const Mynavbar = () => {
               onClick={() => setToggleNavbar((prev) => !prev)}
             ></Button>
           </Offcanvas.Header>
+
           <Offcanvas.Body>
+
             <Nav className="justify-content-center flex-grow-1 pe-3">
-              
-              <NavLink to="/" className={`nav-link my-1 my-sm-0 ${(isActive) =>isActive ? "active" : ""}`} onClick={() => setToggleNavbar(false)} >
+              {/* <Form className="">
+              <Form.Control
+                type="search"
+                placeholder="Search"
+                className="me-2"
+                aria-label="Search"
+              />
+            </Form> */}
+
+              <NavLink to="/" className={`nav-link my-1 my-sm-0 ${(isActive) => isActive ? "active" : ""}`} onClick={() => setToggleNavbar(false)} >
                 Home
               </NavLink>
-              <NavLink to="/jobs" className={`nav-link my-1 my-sm-0 ${(isActive) =>isActive ? "active" : ""}`} onClick={() => setToggleNavbar(false)} >
+              <NavLink to="/jobs" className={`nav-link my-1 my-sm-0 ${(isActive) => isActive ? "active" : ""}`} onClick={() => setToggleNavbar(false)} >
                 Jobs
               </NavLink>
-              {!isloggedin && <NavLink to="/login" className={`nav-link my-1 my-sm-0 ${(isActive) =>isActive ? "active" : ""}`} onClick={() => setToggleNavbar(false)} >
+              {!isloggedin && <NavLink to="/login" className={`nav-link my-1 my-sm-0 ${(isActive) => isActive ? "active" : ""}`} onClick={() => setToggleNavbar(false)} >
                 Login
               </NavLink>}
-              {!isloggedin && <NavLink to="/signup" className={`nav-link my-1 my-sm-0 ${(isActive) =>isActive ? "active" : ""}`} onClick={() => setToggleNavbar(false)} >
+              {!isloggedin && <NavLink to="/signup" className={`nav-link my-1 my-sm-0 ${(isActive) => isActive ? "active" : ""}`} onClick={() => setToggleNavbar(false)} >
                 Signup
-              </NavLink>}
-              {isloggedin && <a className='nav-link my-1 my-sm-0' style={{cursor: 'pointer'}} onClick={useLogoutHandler} >
-                Logout
-              </a>}
-              {isloggedin && <NavLink to="/profile" className={`nav-link my-1 my-sm-0 ${(isActive) =>isActive ? "active" : ""}`} onClick={() => setToggleNavbar(false)} >
-                Profile
               </NavLink>}
 
 
@@ -95,15 +102,26 @@ const Mynavbar = () => {
                 </NavLink>
               ))} */}
             </Nav>
-            {/* <Form className="d-flex">
-              <Form.Control
-                type="search"
-                placeholder="Search"
-                className="me-2"
-                aria-label="Search"
-              />
-              <Button variant="danger">Search</Button>
-            </Form> */}
+            {isloggedin && <Nav className="justify-content-center flex-grow-1">
+              <li className="nav-item dropdown-center dropdown">
+                <a className="nav-link dropdown-toggle" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                  <span>{user.email}</span>
+                </a>
+                <ul className="dropdown-menu">
+                  <li><NavLink to={`/profile/${user.email}`} className={`dropdown-item ${(isActive) => isActive ? "active" : ""}`}>profile</NavLink></li>
+                  <li><NavLink to="/signup" className={`dropdown-item ${(isActive) => isActive ? "active" : ""}`}>Applied Jobs</NavLink></li>
+                  <li><a className='dropdown-item' style={{ cursor: 'pointer' }} onClick={useLogoutHandler} >
+                    Logout
+                  </a></li>
+                </ul>
+              </li>
+
+
+              {/* {isloggedin && <NavLink to="/profile" className={`nav-link my-1 my-sm-0 ${(isActive) =>isActive ? "active" : ""}`} onClick={() => setToggleNavbar(false)} >
+                Profile
+              </NavLink>} */}
+            </Nav>}
+
             <Nav className="justify-content-end">
               <NavDropdown
                 title="Color theme"

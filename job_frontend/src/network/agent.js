@@ -1,3 +1,4 @@
+import axios from "axios";
 import axiosClient from "./apiClient.js";
 
 // accounts urls
@@ -15,6 +16,10 @@ export const getUser =(data) => {
     //   getUser();
 }
 
+export const getUserProfile = () => {
+    return axiosClient().get('user/profile').then(response => response.data);
+}
+
 export const updateUser = (data) => {
     return axiosClient().patch('user/',JSON.stringify(data)).then(response => console.log(response));
 }
@@ -23,4 +28,11 @@ export const updateUser = (data) => {
 // create a user 
 export const createUser = (data) => {
     return axiosClient().post('user/create/',JSON.stringify(data)).then(response => response.data);
+}
+
+
+
+// experiences
+export const getExperience = () => {
+    return axiosClient().get('user/experience').then(response => response.data);
 }

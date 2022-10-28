@@ -47,9 +47,9 @@ def createUser(request):
         if User.objects.filter(email = data['email']):
             user = User.objects.get(email = data['email'])
             profile = commonProfile.objects.get_or_create(user=user)[0]
-            if user.usertype == 1:
+            if user.usertype == 2:
                 organization.objects.create(profile = profile)
-            elif user.usertype == 2:
+            elif user.usertype == 1:
                 userProfile.objects.create(profile=profile)
             serializer = UserSerializer(user,context={"request": request})
             return content(False,'Account Created Successfully','',serializer.data)

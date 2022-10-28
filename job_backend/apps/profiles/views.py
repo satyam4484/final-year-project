@@ -49,8 +49,6 @@ def projectView(request,id=None):
             return content(True,str(e),"deleting project")
 
 
-
-
 # experience details 
 @api_view(['GET','POST','PATCH','DELETE'])
 def experienceView(request,id=None):

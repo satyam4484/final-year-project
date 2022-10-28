@@ -4,16 +4,19 @@ import Routing from "./Components/Layout/Routing";
 import { Container,Row } from "react-bootstrap";
 import Messages from "./Components/UI/Messages";
 import Spinner from "./Components/UI/Spinner";
+import { getUserProfile } from "./network/agent";
 import { useGlobalContext } from "./context";
 
 const App = () => {
-  const {isLoading,error,userLogin} = useGlobalContext();
-
+  const {isLoading,error,userLogin,setUserProfile,toggleSpin} = useGlobalContext();  
   useEffect(() => {
+    toggleSpin();
     if(localStorage.getItem("user")) {
-      console.log("user logined")
-      userLogin();
+      userLogin(JSON.parse(localStorage.getItem("user")));
+      getUserProfile().then(response => setUserProfile(response.data));
     }
+    toggleSpin();
+
   },[])
   return (
     <>
