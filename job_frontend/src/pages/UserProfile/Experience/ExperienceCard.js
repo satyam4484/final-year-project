@@ -2,22 +2,22 @@ import React from "react";
 
 const ExperienceCard = ({experience,showModal}) => {
   return (
-    <div class="card">
-      <div class="card-horizontal">
-        <div class="img-square-wrapper">
+    <div className="card">
+      <div className="card-horizontal">
+        <div className="img-square-wrapper">
           <img
-            class=""
+            className="img-fluid"
             src="http://via.placeholder.com/300x180"
             alt={experience.companyName}
           />
         </div>
-        <div class="card-body">
+        <div className="card-body">
         <button className="float-end" onClick={()=> showModal(experience.id)}>Edit</button>
           <h5 class="card-title">{experience.role} </h5>
           <h6 className="card-title"> {experience.companyName} . {experience.employementType}</h6>
           <h6 className="card-title text-muted"> {experience.startdate} - {experience.enddate}</h6>
           <h6 className="card-title text-secondary fw-bold"> {experience.location}</h6>
-          <p class="card-text">
+          <p className="card-text">
             {experience.description}
           </p>
         </div>

@@ -5,7 +5,6 @@ import ExperienceCard from "./ExperienceCard";
 import AddExperience from "./AddExperience";
 import UpdateExperience from "./UpdateExperience";
 
-
 const initialExperience = {
   role: "",
   companyName: "",
@@ -28,7 +27,6 @@ const Experience = () => {
     setShow(true);
   };
 
-
   return (
     <>
       <Card className="my-3">
@@ -48,8 +46,11 @@ const Experience = () => {
         </Card.Body>
       </Card>
 
-        
-      
+      {/* add ecperience */}
+      <AddExperience />
+
+      {/* update Experience */}
+      <UpdateExperience show={show} onHide = {()=>setShow(false)} />
     </>
   );
 };

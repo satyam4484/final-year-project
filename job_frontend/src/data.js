@@ -12,7 +12,21 @@ export const navitems = [
     {title:"Companies",url:"/companies"}
 ]
 
-export const colors = ["info","primary","danger","warning","success"]
+
+// experience
+/*
+role: "",
+  companyName: "",
+  employementType: "",
+  location: "",
+  startdate: "",
+  enddate: "",
+*/
+export const experience = {
+    role:{value:'',hasError:false,error:'',}
+}
+
+export const colors = ["info","primary","warning","success"]
 
 // exporting images
 export {default as signupimage} from "./assests/images/signup.svg";

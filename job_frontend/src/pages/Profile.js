@@ -2,6 +2,7 @@ import React from "react";
 import { useGlobalContext } from "../context";
 import { Col, Row, Card, CardGroup } from "react-bootstrap";
 import Experience from "./UserProfile/Experience/Experience";
+import Project from "./UserProfile/Projects/Project";
 
 const Profile = () => {
   const { profile } = useGlobalContext();
@@ -50,7 +51,7 @@ const Profile = () => {
         </Card.Header>
 
         <Card.Body>
-          <div class="sites" style={{ width: "100%",height:"300px", overflowX: "auto" }}>
+          <div class="sites" style={{ width: "100%",height:"300px", overflow: "auto" }}>
             {profile.profile?.websites.map((website, index) => (
               <Card style={{ width: "18rem" }} className="d-inline-block m-3 bordered shadow-lg">
 
@@ -67,6 +68,9 @@ const Profile = () => {
 
       {/* experience */}
       <Experience/>
+
+      {/* projects */}
+      <Project/>
     </Col>
   );
 };

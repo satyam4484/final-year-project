@@ -31,8 +31,18 @@ export const createUser = (data) => {
 }
 
 
-
 // experiences
 export const getExperience = () => {
     return axiosClient().get('user/experience').then(response => response.data);
 }
+
+
+// projects
+export const getProjects = () => {
+    return axiosClient().get('user/project').then(response => response.data);
+}
+
+export const addProjects = () => {
+    return axiosClient();
+}
+
