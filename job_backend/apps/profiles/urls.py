@@ -5,6 +5,7 @@ urlpatterns = [
     path('profile',userProfileView),
     path('contact',contactView),
     path('website',websiteView),
+    path('website/<int:id>',websiteView),
     path('skill',setSkill),
     path('skill/<int:id>',setSkill),
     path('education',educationView),

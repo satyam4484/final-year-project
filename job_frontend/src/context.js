@@ -27,7 +27,6 @@ const AppProvider = ({ children }) => {
   };
 
   const setUserProfile = (profile) => {
-    
     dispatch({ type: "USER_PROFILE", data:profile });
   };
   const userLogout = () => {

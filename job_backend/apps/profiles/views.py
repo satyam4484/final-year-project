@@ -197,9 +197,17 @@ def contactView(request):
 
 
 # websites
-@api_view(['POST','PATCH','DELETE'])
-def websiteView(request):
-    if request.method == "POST":
+@api_view(['GET','POST','PATCH','DELETE'])
+def websiteView(request,id=None):
+    if request.method == "GET":
+        try:
+            user = request.user
+            profile = commonProfile.objects.get(user = request.user)
+            serializer = websiteSerializer(profile.websites,many=True,context={"request": request})
+            return content(False,"","",serializer.data)
+        except Exception as e:
+            return content(True,str(e),"getting website")
+    elif request.method == "POST":
         try:
             data = request.data
             serializer = websiteSerializer(data = data)
@@ -215,20 +223,24 @@ def websiteView(request):
             return content(True,str(e),"Error Occured in deleting websites ")
     elif request.method == "PATCH":
         try:
-            data = request.data
-            web = website.objects.get(id = data['id'])
-            serializer = websiteSerializer(instance=web,data = data,partial = True)
-            if serializer.is_valid():
-                serializer.save()
-                return content(False,"","",serializer.data)
-            return content(True,"Error","Error Occured in updating website",serializer.errors)
+            if id:
+                web = website.objects.get(id =id)
+                serializer = websiteSerializer(instance=web,data = data,partial = True)
+                if serializer.is_valid():
+                    serializer.save()
+                    return content(False,"","",serializer.data)
+                else:
+                    return content(True,serializer.errors)
+            return content(True,"Error","Error Occured in updating website","Enter a valid url")
         except Exception as e:
             return content(True,str(e),"Error Occured in updating websited")
     else :
         try:
-            site = website.objects.get(id= request.data['id'])
-            site.delete()
-            return content(False,"","website deleted successfully")
+            if id : 
+                site = website.objects.get(id= id)
+                site.delete()
+                return content(False,"website deleted successfully",)
+            raise Exception("Enter a valid Id")
         except Exception as e:
             return content(True,str(e),"Error Occured in deleting websites ")
         

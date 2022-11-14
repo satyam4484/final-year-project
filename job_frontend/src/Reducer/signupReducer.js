@@ -23,7 +23,6 @@ export const signupReducer = (state,action) => {
 
 
         case "INPUT_BLUR":
-            
             if(action.data.value.trim().length === 0) {
                 return {...state,[action.data.key]:{...state[action.data.key],hasError:true,error:`${action.data.key} cannot be empty !!!`}}
             }

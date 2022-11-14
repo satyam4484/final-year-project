@@ -4,8 +4,12 @@ import { Col, Row, Card, CardGroup } from "react-bootstrap";
 import Experience from "./UserProfile/Experience/Experience";
 import Project from "./UserProfile/Projects/Project";
 
+import Website from "./UserProfile/Websites/Website";
+
+
 const Profile = () => {
   const { profile } = useGlobalContext();
+  
 
   return (
     <Col xs={10}>
@@ -43,34 +47,18 @@ const Profile = () => {
       </Card>
 
       {/* websites */}
-      <Card className="my-3">
-        <Card.Header>
-          <h3 className="d-inline">Websites</h3>
-          <button className="float-end btn btn-sm mx-2">Edit</button>
-          <button className="float-end btn btn-sm mx-2">add</button>
-        </Card.Header>
 
-        <Card.Body>
-          <div class="sites" style={{ width: "100%",height:"300px", overflow: "auto" }}>
-            {profile.profile?.websites.map((website, index) => (
-              <Card style={{ width: "18rem" }} className="d-inline-block m-3 bordered shadow-lg">
+      <Website/>
 
-                <Card.Body>
-                  <Card.Title>{website.name}</Card.Title>
-                  <Card.Text>{website.link}</Card.Text>
-                 
-                </Card.Body>
-              </Card>
-            ))}
-          </div>
-        </Card.Body>
-      </Card>
+
+
+      
 
       {/* experience */}
-      <Experience/>
+      {/* <Experience/> */}
 
       {/* projects */}
-      <Project/>
+      {/* <Project/> */}
     </Col>
   );
 };

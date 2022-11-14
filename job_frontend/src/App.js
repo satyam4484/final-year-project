@@ -4,7 +4,7 @@ import Routing from "./Components/Layout/Routing";
 import { Container,Row } from "react-bootstrap";
 import Messages from "./Components/UI/Messages";
 import Spinner from "./Components/UI/Spinner";
-import { getUserProfile } from "./network/agent";
+import { getUserProfile,getWebsites } from "./network/agent";
 import { useGlobalContext } from "./context";
 
 const App = () => {
@@ -13,6 +13,7 @@ const App = () => {
     toggleSpin();
     if(localStorage.getItem("user")) {
       userLogin(JSON.parse(localStorage.getItem("user")));
+      
       getUserProfile().then(response => setUserProfile(response.data));
     }
     toggleSpin();

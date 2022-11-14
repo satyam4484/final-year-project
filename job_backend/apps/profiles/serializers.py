@@ -10,10 +10,10 @@ class websiteSerializer(ModelSerializer):
 
 
 class commonProfileSerializer(ModelSerializer):
-    websites = websiteSerializer(many=True)
+    # websites = websiteSerializer(many=True)  # removing the website from the request adding it manully 
     class Meta:
         model = commonProfile
-        fields = ['headline','profilePic','coverImage','user','websites']
+        fields = ['headline','profilePic','coverImage','user']
     
 
 class contactSerializer(ModelSerializer):
@@ -29,7 +29,6 @@ class skillSerializer(ModelSerializer):
         fields = ['id','name']
 
     def create(self, validated_data):  
-        print(validated_data)  
         if(skill.objects.filter(name = validated_data['name'])) :
             return skill.objects.get(name = validated_data['name'])
 

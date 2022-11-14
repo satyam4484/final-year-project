@@ -46,3 +46,18 @@ export const addProjects = () => {
     return axiosClient();
 }
 
+
+// websites
+export const getWebsites = () => {
+    return axiosClient().get('user/website').then(response  => response.data);
+}
+export const addWebsites = (data) => {
+    return axiosClient().post('user/website',data).then(response => response.data);
+}
+export const deleteWebsites = (id) => {
+    return axiosClient().delete(`user/website/${id}`).then(response => response.data)
+}
+
+export const updateWebsite = (data,id) => {
+    return axiosClient().patch(`user/website/${id}`,data).then(response => response.data);
+}

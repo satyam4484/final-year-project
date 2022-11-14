@@ -88,3 +88,11 @@
         height: auto;
     }
 }
+
+.hover{
+    transition: 0.1s ease-in;
+}
+
+.hover:hover{
+    transform: scale(1.2);
+}
