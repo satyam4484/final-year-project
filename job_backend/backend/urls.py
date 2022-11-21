@@ -10,6 +10,7 @@ urlpatterns = [
     path('api/token/refresh',TokenRefreshView.as_view()),
     path('api/token/verify',TokenVerifyView.as_view()),
     path('api/user/',include('apps.accounts.urls')),
-    path('api/user/',include('apps.profiles.urls'))
+    path('api/user/',include('apps.profiles.urls')),
+    path('api/organization/',include('apps.organization.urls')),
 ]+ static(settings.MEDIA_URL,document_root=settings.MEDIA_ROOT)
     

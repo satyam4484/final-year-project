@@ -5,5 +5,5 @@ from .models import organization
 
 @admin.register(organization)
 class organizationAdmin(admin.ModelAdmin):
-    list_display = ['id','companyName','profile','industry','companySize','specialties']
+    list_display = ['id','company','companyName','companyLogo','companyCover','website','industry','specialties']
     

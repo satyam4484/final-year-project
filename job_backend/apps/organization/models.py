@@ -7,10 +7,12 @@ from apps.profiles.models import *
 
 # Create your models here.
 class organization(models.Model):
-    companyName = models.CharField(max_length = 300)
-    profile = models.OneToOneField(commonProfile,on_delete = models.CASCADE)
+    company = models.OneToOneField(User,on_delete=models.CASCADE)
+    companyName = models.CharField(max_length = 300,default="company")
+    companyLogo = models.ImageField(upload_to='organization/',default='defaultProfile.jpg')
+    companyCover = models.ImageField(upload_to='organization/',default='cover.png')
+    website = models.URLField()
     industry = models.CharField(max_length = 200)
-    companySize=models.CharField(max_length = 100)
     specialties = models.CharField(max_length = 300)
 
     def __str__(self):
