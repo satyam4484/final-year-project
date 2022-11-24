@@ -9,11 +9,11 @@ class websiteSerializer(ModelSerializer):
         fields="__all__"
 
 
-class commonProfileSerializer(ModelSerializer):
-    # websites = websiteSerializer(many=True)  # removing the website from the request adding it manully 
-    class Meta:
-        model = commonProfile
-        fields = ['headline','profilePic','coverImage','user']
+# class commonProfileSerializer(ModelSerializer):
+#     # websites = websiteSerializer(many=True)  # removing the website from the request adding it manully 
+#     class Meta:
+#         model = commonProfile
+#         fields = ['headline','profilePic','coverImage','user']
     
 
 class contactSerializer(ModelSerializer):
@@ -37,12 +37,9 @@ class skillSerializer(ModelSerializer):
 
 
 class userProfileSerializer(ModelSerializer):
-    profile = commonProfileSerializer()
-    contactDetails = contactSerializer()
-    # skill = skillSerializer(many=True)
     class Meta:
         model = userProfile
-        fields = ['id','firstName','lastName','profile','contactDetails']
+        fields = ['id','firstName','lastName','headline','profilePic','coverImage',]
 
 
 class educationSerializer(ModelSerializer):
@@ -66,6 +63,7 @@ class projectSerializer(ModelSerializer):
 
 
 
-
+# user profile changes have been made
+# table data values have migrated to user profile
 
 

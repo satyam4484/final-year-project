@@ -14,7 +14,7 @@ class skillAdmin(admin.ModelAdmin):
 
 @admin.register(userProfile)
 class userProfileAdmin(admin.ModelAdmin):
-    list_display = ['id','firstName','lastName','profile','contactDetails']
+    list_display = ['id','firstName','lastName','headline','profilePic','coverImage','contactDetails']
 
 @admin.register(education)
 class educationAdmin(admin.ModelAdmin):
@@ -27,3 +27,4 @@ class experienceAdmin(admin.ModelAdmin):
 @admin.register(project)
 class projectAdmin(admin.ModelAdmin):
     list_display=['id','user','title','startdate','enddate','projectUrl','description']
+

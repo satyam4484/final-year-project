@@ -4,6 +4,7 @@ User = get_user_model()
 
 class contact(models.Model):
     mobile = models.CharField(max_length=12,blank=True,null=True,unique=True)
+    phoneCountryCode = models.CharField(max_length=10,default="+91")
     address=models.CharField(max_length=500)
     birthMonth = models.CharField(max_length=9,blank=True,null=True)
     birthDay = models.IntegerField(blank=True,null=True)
@@ -27,26 +28,28 @@ class skill(models.Model):
     def __str__(self):
         return self.name
 
-class commonProfile(models.Model):
-    user = models.OneToOneField(User,on_delete=models.CASCADE)
-    headline = models.CharField(max_length=500,blank=True,null=True)
-    profilePic=models.ImageField(upload_to='profileimage/',default='defaultProfile.jpg')
-    coverImage = models.ImageField(upload_to='coverImage/',default='cover.png')
-    websites = models.ManyToManyField(website,related_name='websites',blank=True)
+# class commonProfile(models.Model):
+#     user = models.OneToOneField(User,on_delete=models.CASCADE)
+#     headline = models.CharField(max_length=500,blank=True,null=True)
 
-    def __str__(self):
-        return self.user.email
+
+#     def __str__(self):
+#         return self.user.email
 
 
 class userProfile(models.Model):
+    user = models.OneToOneField(User,on_delete=models.CASCADE)
     firstName = models.CharField(max_length=100,blank=True,null=True)
     lastName = models.CharField(max_length=100,blank=True,null=True)
-    profile = models.OneToOneField(commonProfile,on_delete = models.CASCADE)
+    headline = models.CharField(max_length=500,blank=True,null=True)
+    profilePic=models.ImageField(upload_to='profileimage/',default='defaultProfile.jpg')
     contactDetails = models.OneToOneField(contact,on_delete=models.CASCADE,blank=True,null=True)
+    coverImage = models.ImageField(upload_to='coverImage/',default='cover.png')
+    websites = models.ManyToManyField(website,related_name='websites',blank=True)
     skill = models.ManyToManyField(skill,related_name='userskills',blank=True)
 
     def __str__(self):
-        return self.profile.user.email
+        return self.user.email
 
 
 class education(models.Model):

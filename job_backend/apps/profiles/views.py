@@ -4,9 +4,6 @@ from .serializers import *
 from .models import *
 from apps.accounts.views import content
 
-
-
-
 @api_view(['GET','POST','PATCH','DELETE'])
 def projectView(request,id=None):
     if request.method == 'GET':
@@ -137,37 +134,56 @@ def educationView(request,id=None):
             return content(True,str(e),"getting education")
 
 # user profile data 
-@api_view(['GET','PATCH'])
+
+''''
+try:
+    i
+except Exception as e:
+    return content
+'''
+@api_view(['GET','POST','PATCH'])
 def userProfileView(request):
     if request.method == "GET":
         try:
-            cprofile = commonProfile.objects.get(user = request.user)
-            uProfile = userProfile.objects.get(profile = cprofile)
-            serializer = userProfileSerializer(uProfile,context={"request": request})
-            return content(False,"","",serializer.data)
-            
+            user= request.user
+            profile = userProfile.objects.get(user = user)
+            serializer = userProfileSerializer(profile,context={"request": request})
+            return content(False,"","",serializer.data)  
         except Exception as e:
-            return content(True,str(e),"Error Occured in getting user profile")
+            return content(True,str(e),"Error Occured in getting user prxofile")
+    elif request.method == "POST":
+        try:
+            data = request.data 
+            serializer = userProfileSerializer(data = data,context={"request": request})
+            if serializer.is_valid(raise_exception=True):
+                serializer.save(user = request.user)
+                return content(False,"","",serializer.data)
+        except Exception as e:
+            return content(True,str(e),"adding userprofile")
     else:
         try:
             data = request.data
-            cprofile = commonProfile.objects.get(user = request.user)
-            uProfile = userProfile.objects.get(profile = cprofile)
-            serializer = userProfileSerializer(instance=uProfile,data=data,partial=True,context={"request": request})
+            Profile = userProfile.objects.get(user = request.user)
+            serializer = userProfileSerializer(instance=Profile,data=data,partial=True,context={"request": request})
             if serializer.is_valid(raise_exception=True):
                 serializer.save()
                 return content(False,"","",serializer.data)
-            else:
-                return content(True,"Error","Error occured in updating profile",serializer.errors)
-
+            raise Exception(serializer.errors)
         except Exception as e:
             return content(True,str(e),"Error Occured in updating user profile")
 
 
 # contact functions
-@api_view(['POST','PATCH'])
+@api_view(['GET','POST','PATCH'])
 def contactView(request):
-    if request.method == "POST":
+    if request.method == "GET":
+        try:
+            contact  = userProfile.objects.get(user = request.user) 
+            serializer = contactSerializer(contact.contactDetails)
+            return content(True,"","",serializer.data)
+        except Exception as e:
+            return content(True,str(e),"Contact details")
+    elif request.method == "POST":
         try:
             data = request.data 
             serializer = contactSerializer(data = data)
@@ -196,13 +212,14 @@ def contactView(request):
             return content(True,str(e),"Error Occured in creating contact")
 
 
-# websites
+# websites  
+
+#website view need to be changed
 @api_view(['GET','POST','PATCH','DELETE'])
 def websiteView(request,id=None):
     if request.method == "GET":
         try:
-            user = request.user
-            profile = commonProfile.objects.get(user = request.user)
+            profile = userProfile.objects.get(user = request.user)
             serializer = websiteSerializer(profile.websites,many=True,context={"request": request})
             return content(False,"","",serializer.data)
         except Exception as e:
@@ -214,11 +231,11 @@ def websiteView(request,id=None):
             if serializer.is_valid():
                 serializer.save()
                 web = website.objects.get(id = serializer.data['id'])
-                profile = commonProfile.objects.get(user = request.user)
+                profile = userProfile.objects.get(user = request.user)
                 profile.websites.add(web)
                 profile.save()
                 return content(False,"","",serializer.data)
-            return content(False,"Error","Error Occured in adding website",serializer.errors)
+            raise Exception(serializer.errors)
         except Exception as e:
             return content(True,str(e),"Error Occured in deleting websites ")
     elif request.method == "PATCH":
