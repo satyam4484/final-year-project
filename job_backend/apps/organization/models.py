@@ -27,5 +27,8 @@ class job(models.Model):
     description = RichTextField()
     skillSet = models.ManyToManyField(skill)
     company = models.ForeignKey(organization,on_delete=models.CASCADE)
-    # usersApplied = models.ManyToManyField() 
+    usersApplied = models.ManyToManyField(userProfile) 
+
+    def __str__(self):
+        return f'{self.role} in {self.company}'
     
