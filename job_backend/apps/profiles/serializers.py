@@ -39,7 +39,7 @@ class skillSerializer(ModelSerializer):
 class userProfileSerializer(ModelSerializer):
     class Meta:
         model = userProfile
-        fields = ['id','firstName','lastName','headline','profilePic','coverImage',]
+        fields = ['id','firstName','lastName','headline','gender','profilePic','coverImage','resume']
 
 
 class educationSerializer(ModelSerializer):

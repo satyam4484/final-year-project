@@ -280,12 +280,12 @@ def setSkill(request,id=None):
                 if serializer.is_valid():
                     serializer.save()
                     sk = skill.objects.get(pk = serializer.data['id'])
-                    user = userProfile.objects.get(profile__user = request.user)
+                    user = userProfile.objects.get(user = request.user)
                     if(not user.skill.filter(name = serializer.data['name'])) :
                         user.skill.add(sk)
                         user.save()
 
-            user = userProfile.objects.get(profile__user = request.user)     
+            user = userProfile.objects.get(user = request.user)     
             serializer = skillSerializer(user.skill,many=True)
             return content(False,"","",serializer.data)
         except Exception as e:

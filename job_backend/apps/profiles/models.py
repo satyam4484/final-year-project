@@ -44,6 +44,9 @@ class userProfile(models.Model):
     headline = models.CharField(max_length=500,blank=True,null=True)
     profilePic=models.ImageField(upload_to='profileimage/',default='defaultProfile.jpg')
     contactDetails = models.OneToOneField(contact,on_delete=models.CASCADE,blank=True,null=True)
+    # adding new details
+    gender = models.CharField(max_length=15)
+    resume = models.FileField(upload_to='resume/',blank=True,null=True)
     coverImage = models.ImageField(upload_to='coverImage/',default='cover.png')
     websites = models.ManyToManyField(website,related_name='websites',blank=True)
     skill = models.ManyToManyField(skill,related_name='userskills',blank=True)

@@ -1,11 +1,9 @@
 from django.db import models
 from django.contrib.auth import get_user_model
 User = get_user_model()
-from django.db.models.signals import post_save
-from django.dispatch import receiver
 from apps.profiles.models import *
 from ckeditor.fields import RichTextField
-# Create your models here.
+# Create your models here. 
 class organization(models.Model):
     company = models.OneToOneField(User,on_delete=models.CASCADE)
     companyName = models.CharField(max_length = 300,default="company")
@@ -27,7 +25,7 @@ class job(models.Model):
     description = RichTextField()
     skillSet = models.ManyToManyField(skill)
     company = models.ForeignKey(organization,on_delete=models.CASCADE)
-    usersApplied = models.ManyToManyField(userProfile) 
+    usersApplied = models.ManyToManyField(userProfile,blank=True,null=True) 
 
     def __str__(self):
         return f'{self.role} in {self.company}'
