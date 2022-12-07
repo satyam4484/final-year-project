@@ -47,7 +47,7 @@ class userProfile(models.Model):
     # adding new details
     gender = models.CharField(max_length=15)
     resume = models.FileField(upload_to='resume/',blank=True,null=True)
-    coverImage = models.ImageField(upload_to='coverImage/',default='cover.png')
+    # coverImage = models.ImageField(upload_to='coverImage/',default='cover.png')
     websites = models.ManyToManyField(website,related_name='websites',blank=True)
     skill = models.ManyToManyField(skill,related_name='userskills',blank=True)
 

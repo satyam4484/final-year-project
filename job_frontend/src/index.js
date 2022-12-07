@@ -5,14 +5,15 @@ import { AppProvider } from "./context";
 import App from "./App";
 import "./assests/css/bootstrap.css";
 import "../node_modules/bootstrap/dist/js/bootstrap.bundle.min.js";
-
+import "./assests/css/style.css";
+import "./assests/js/main.js";
 
 const root = createRoot(document.getElementById("root"));
 
 root.render(
   <AppProvider>
     <Routes>
-    <App />
+      <App />
     </Routes>
   </AppProvider>
 );
