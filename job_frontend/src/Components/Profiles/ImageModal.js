@@ -1,16 +1,24 @@
 import React,{useState} from "react";
 import { Modal, Button } from "react-bootstrap";
 import { updateUserProfile } from "../../network/agent";
+import { useGlobalContext } from "../../context";
+
 
 const ImageModal = ({ show, onHide, profilepic }) => {
   const [image,setImage] = useState('');
+  const {updateProfile} = useGlobalContext();
 
   const changeProfilePhotoHandler = ()=> {
     if(image.length === 0) {
       return;
     }
-    const data = new FormData();
+    let data = new FormData();
     data.append('profilePic',image);
+    updateUserProfile(data).then(response => {
+      setImage('');
+      onHide('');
+      updateProfile(response.data);
+    })
 
   }
   
